@@ -33,7 +33,7 @@ const express_1 = require("express");
 const bookService = __importStar(require("../service/bookService"));
 const book_1 = require("../dao/model/book");
 exports.bookRouter = express_1.Router();
-exports.bookRouter.get('/book', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.bookRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         res.json(yield bookService.findAllBooks());
     }

@@ -22,8 +22,10 @@ app.use('/book',bookRouter);
 app.use('/auth',loginRouter);
 
 
-app.get('/', (req:express.Request, res:express.Response) => {   
-   res.send('Hello world'); 
+/*app.get('/', (req:express.Request, res:express.Response) => {   
+   res.send(bookRouter); 
 })
+*/
+
 
 

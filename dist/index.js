@@ -34,6 +34,7 @@ app.use(logging_middleware_1.loggingMiddleware);
 app.use(session_middleware_1.sessionMiddleware);
 app.use('/book', bookRouter_1.bookRouter);
 app.use('/auth', loginRouter_1.loginRouter);
-app.get('/', (req, res) => {
-    res.send('Hello world');
-});
+/*app.get('/', (req:express.Request, res:express.Response) => {
+   res.send(bookRouter);
+})
+*/

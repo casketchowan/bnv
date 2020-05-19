@@ -6,7 +6,7 @@ import { Book } from '../dao/model/book';
 export const bookRouter = Router();
 
 
-bookRouter.get('/book', async (req,res)=>{
+bookRouter.get('/', async (req,res)=>{
     try{
         res.json(await bookService.findAllBooks());
     }catch(e){
