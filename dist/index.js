@@ -23,13 +23,15 @@ const config_1 = require("./config/");
 const express = require("express");
 const bookRouter_1 = require("./router/bookRouter");
 const bodyparser = __importStar(require("body-parser"));
+const logging_middleware_1 = require("./middleware/logging-middleware");
+const session_middleware_1 = require("./middleware/session-middleware");
 const loginRouter_1 = require("./router/loginRouter");
 const app = express(); // initialize the express server
 // create a test route
 app.listen(config_1.PORT, () => { console.log(`server started running on ${config_1.PORT}`); });
-app.use(bodyparser.json);
-//app.use(loggingMiddleware);
-//app.use(sessionMiddleware);
+app.use(bodyparser.json());
+app.use(logging_middleware_1.loggingMiddleware);
+app.use(session_middleware_1.sessionMiddleware);
 app.use('/book', bookRouter_1.bookRouter);
 app.use('/auth', loginRouter_1.loginRouter);
 app.get('/', (req, res) => {
