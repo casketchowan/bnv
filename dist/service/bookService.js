@@ -28,7 +28,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.saveOneBook = exports.findAllBooks = void 0;
+exports.updateBook = exports.saveOneBook = exports.findAllBooks = void 0;
 const bookRepository = __importStar(require("../dao/bookRepository"));
 //Typically, you would put business logic inside of your service layer
 // if you wanted to implement filtering or some complex functionality, this could be
@@ -47,3 +47,9 @@ function saveOneBook(input) {
     });
 }
 exports.saveOneBook = saveOneBook;
+function updateBook(input) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return bookRepository.updateBook(input);
+    });
+}
+exports.updateBook = updateBook;

@@ -10,7 +10,7 @@ import { loginRouter } from './router/loginRouter';
 
 
 const app = express(); // initialize the express server
-// create a test route
+// port listening
 app.listen(PORT, () => {console.log(`server started running on ${PORT}`)});
 
 app.use(bodyparser.json());

@@ -54,3 +54,12 @@ exports.bookRouter.post('/book', (req, res) => __awaiter(void 0, void 0, void 0,
         res.status(500).send(e.message);
     }
 }));
+exports.bookRouter.post('/update', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        res.json(yield bookService.updateBook(new book_1.Book(0, booktitle, price, author, publisher)));
+    }
+    catch (e) {
+        // if something goes wrong, send back a 500 error and the error message
+        res.status(500).send(e.message);
+    }
+}));

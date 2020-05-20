@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.saveOneBook = exports.findAllBooks = void 0;
+exports.updateBook = exports.saveOneBook = exports.findAllBooks = void 0;
 const book_1 = require("./model/book");
 const index_1 = require("./index");
 const bookDAO_1 = require("./bookDAO");
@@ -59,3 +59,24 @@ function saveOneBook(input) {
     });
 }
 exports.saveOneBook = saveOneBook;
+function updateBook(input) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let client;
+        let bookUpdate;
+        try {
+            client = yield index_1.pool.connect();
+            const result = yield client.query("UPDATE books(id, price) SET price = 5.00 WHERE id = 1;");
+            let bookUpdate = result.rows.map(bookDAO_1.BookArray);
+            bookUpdate = input;
+            return bookUpdate;
+        }
+        catch (err) {
+            console.log(err);
+        }
+        finally {
+            client && client.release();
+        }
+        return bookUpdate;
+    });
+}
+exports.updateBook = updateBook;
