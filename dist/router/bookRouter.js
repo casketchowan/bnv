@@ -42,8 +42,7 @@ exports.bookRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, func
         res.status(500).send(e.message);
     }
 }));
-exports.bookRouter.post('/book', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // the line below is getting information from the body of the request via destructuring
+exports.bookRouter.post('/new', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let { booktitle, price, author, publisher } = req.body; //try outputting req.body to the console to see what it looks like
     try {
         let book = yield bookService.saveOneBook(new book_1.Book(0, booktitle, price, author, publisher));
@@ -54,12 +53,21 @@ exports.bookRouter.post('/book', (req, res) => __awaiter(void 0, void 0, void 0,
         res.status(500).send(e.message);
     }
 }));
-exports.bookRouter.post('/update', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.bookRouter.get('/update', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.json(yield bookService.updateBook(new book_1.Book(0, booktitle, price, author, publisher)));
+        res.json(yield bookService.updateBooks());
     }
     catch (e) {
         // if something goes wrong, send back a 500 error and the error message
+        res.status(500).send(e.message);
+    }
+}));
+exports.bookRouter.get('/delete', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        let bookRM = yield bookService.deleteBooks();
+        res.json(bookRM);
+    }
+    catch (e) {
         res.status(500).send(e.message);
     }
 }));

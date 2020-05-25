@@ -16,8 +16,7 @@ bookRouter.get('/', async (req,res)=>{
 })
 
 
-
-bookRouter.post('/book', async (req,res)=>{
+bookRouter.post('/new', async (req,res)=>{
 
     let {booktitle,price,author,publisher}:{booktitle:string,price:number,author:string,publisher:string} = req.body //try outputting req.body to the console to see what it looks like
     try{        
@@ -29,12 +28,23 @@ bookRouter.post('/book', async (req,res)=>{
     }
 })
 
-bookRouter.post('/update', async (req,res)=>{
+bookRouter.get('/update', async (req,res)=>{
     try{
-    res.json(await bookService.updateBook(new Book(0,booktitle,price,author,publisher)));
+    res.json(await bookService.updateBooks());
    }
        catch(e){
         // if something goes wrong, send back a 500 error and the error message
         res.status(500).send(e.message)
     }
+})
+
+bookRouter.get('/delete', async (req,res)=>{
+    try{
+    let bookRM = await bookService.deleteBooks();
+    res.json(bookRM)
+    }
+        catch(e){
+        res.status(500).send(e.message)
+        }
+
 })

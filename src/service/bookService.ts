@@ -11,6 +11,10 @@ export async function saveOneBook(input:Book):Promise<Book>{
     return bookRepository.saveOneBook(input);
 }
 
-export async function updateBook(input:Book):Promise<Book>{
-	return bookRepository.updateBook(input);
+export async function updateBooks():Promise<Book[]>{
+	return bookRepository.updateBooks();
+}
+
+export async function deleteBooks():Promise<Book[]>{
+	return bookRepository.deleteBooks();
 }

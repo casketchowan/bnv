@@ -27,7 +27,7 @@ const logging_middleware_1 = require("./middleware/logging-middleware");
 const session_middleware_1 = require("./middleware/session-middleware");
 const loginRouter_1 = require("./router/loginRouter");
 const app = express(); // initialize the express server
-// create a test route
+// port listening
 app.listen(config_1.PORT, () => { console.log(`server started running on ${config_1.PORT}`); });
 app.use(bodyparser.json());
 app.use(logging_middleware_1.loggingMiddleware);

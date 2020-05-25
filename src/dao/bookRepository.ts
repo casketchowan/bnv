@@ -37,19 +37,34 @@ export async function saveOneBook(input:Book):Promise<Book>{
     return newBook;
 }
 
-export async function updateBook(input:Book):Promise<Book>{
+export async function updateBooks():Promise<Book[]>{
     let client;
-    let bookUpdate;
     try{
-    client = await pool.connect();
-    const result = await client.query("UPDATE books(id, price) SET price = 5.00 WHERE id = 1;");
-    let bookUpdate = result.rows.map(BookArray);
-    bookUpdate = input;
-    return bookUpdate;
+        client = await pool.connect();
+        const results = client.query("UPDATE books SET price = price / 2 WHERE id > 1;");
+        const results2 = await client.query("select * from books");
+        let output = results2.rows.map(BookArray);
+        return output;
     }catch(err){
         console.log(err);
     }finally{
         client && client.release();
     }
-    return bookUpdate;
+    return [];
+}
+
+export async function deleteBooks():Promise<Book[]>{
+    let client;
+    try{
+        client = await pool.connect();
+        const results = client.query("DELETE FROM books WHERE id NOT IN (1,2);");
+        const results2 = await client.query("select * from books");
+        let output = results2.rows.map(BookArray);
+        return output;
+    }catch(err){
+        console.log(err);
+    }finally{
+        client && client.release();
+    }
+    return [];
 }

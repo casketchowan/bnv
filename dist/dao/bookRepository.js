@@ -9,20 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateBook = exports.saveOneBook = exports.findAllBooks = void 0;
+exports.deleteBooks = exports.updateBooks = exports.saveOneBook = exports.findAllBooks = void 0;
 const book_1 = require("./model/book");
 const index_1 = require("./index");
 const bookDAO_1 = require("./bookDAO");
+//data for functions
 function findAllBooks() {
     return __awaiter(this, void 0, void 0, function* () {
         let client;
         try {
             client = yield index_1.pool.connect();
             const results = yield client.query("select * from books");
-            // console.table(results.rows);
-            // console.log(results.rows);
             let output = results.rows.map(bookDAO_1.BookArray);
-            // console.log(output);
             return output;
         }
         catch (err) {
@@ -41,10 +39,8 @@ function saveOneBook(input) {
         let newBook = new book_1.Book(0, "", 0, "", "");
         try {
             client = yield index_1.pool.connect();
-            //insert paper into table and retrieve the generated id (optional)
             const result = yield client.query("INSERT INTO books(booktitle, price, author, publisher) VALUES($1,$2,$3,$4) RETURNING id;", [input.booktitle, input.price, input.author, input.publisher]);
             let bookId = result.rows[0].id; // try console.log-ing result.rows to see why we access the id this way
-            // console.table(result.rows);
             newBook = input;
             newBook.id = bookId;
             return newBook;
@@ -59,16 +55,15 @@ function saveOneBook(input) {
     });
 }
 exports.saveOneBook = saveOneBook;
-function updateBook(input) {
+function updateBooks() {
     return __awaiter(this, void 0, void 0, function* () {
         let client;
-        let bookUpdate;
         try {
             client = yield index_1.pool.connect();
-            const result = yield client.query("UPDATE books(id, price) SET price = 5.00 WHERE id = 1;");
-            let bookUpdate = result.rows.map(bookDAO_1.BookArray);
-            bookUpdate = input;
-            return bookUpdate;
+            const results = client.query("UPDATE books SET price = price / 2 WHERE id > 1;");
+            const results2 = yield client.query("select * from books");
+            let output = results2.rows.map(bookDAO_1.BookArray);
+            return output;
         }
         catch (err) {
             console.log(err);
@@ -76,7 +71,27 @@ function updateBook(input) {
         finally {
             client && client.release();
         }
-        return bookUpdate;
+        return [];
     });
 }
-exports.updateBook = updateBook;
+exports.updateBooks = updateBooks;
+function deleteBooks() {
+    return __awaiter(this, void 0, void 0, function* () {
+        let client;
+        try {
+            client = yield index_1.pool.connect();
+            const results = client.query("DELETE FROM books WHERE id NOT IN (1,2);");
+            const results2 = yield client.query("select * from books");
+            let output = results2.rows.map(bookDAO_1.BookArray);
+            return output;
+        }
+        catch (err) {
+            console.log(err);
+        }
+        finally {
+            client && client.release();
+        }
+        return [];
+    });
+}
+exports.deleteBooks = deleteBooks;
